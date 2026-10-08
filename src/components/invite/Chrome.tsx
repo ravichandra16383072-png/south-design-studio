@@ -12,7 +12,8 @@ export function Curtain({ onOpen }: { onOpen: () => void }) {
   };
   return (
     <AnimatePresence>
-      {!opening || true ? (
+      {(
+
         <motion.div className="fixed inset-0 z-50 mx-auto max-w-[430px] overflow-hidden" exit={{ opacity: 0 }} onClick={() => { if (!opening) { setOpening(true); onOpen(); } }}>
           <motion.div className={`${panel} left-0 border-r-8 border-gold`} style={fabric} animate={opening ? { x: "-100%" } : { x: 0 }} transition={{ duration: 1.6, ease: [0.7, 0, 0.3, 1] }}>
             <div className="absolute inset-y-0 right-2 w-2 silk-border !h-auto" />
