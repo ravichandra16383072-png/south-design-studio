@@ -75,7 +75,7 @@ export function Hero() {
       <motion.a
         href="#blessing"
         className="relative z-20 mt-6 flex flex-col items-center text-xs uppercase tracking-[0.3em] text-muted-foreground"
-        animate={reduce ? undefined : { y: [0, 8, 0] }}
+        animate={reduce ? { y: 0 } : { y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 1.8 }}
       >
         Scroll to discover
