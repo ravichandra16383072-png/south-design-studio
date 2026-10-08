@@ -32,7 +32,7 @@ export function Curtain({ onOpen }: { onOpen: () => void }) {
             <span className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Tap to open</span>
           </motion.button>
         </motion.div>
-      ) : null}
+      )}
     </AnimatePresence>
   );
 }
