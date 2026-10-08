@@ -277,14 +277,14 @@ export function Family() {
 
 export function Gallery() {
   const [order, setOrder] = useState(invite.galleryPhotos.map((_, i) => i));
-  const next = () => setOrder((o) => [...o.slice(1), o[0]]);
+  const next = () => setOrder((o) => [...o.slice(1), o[0] as number]);
   return (
     <Section className="text-center">
       <Heading kicker="moments" title="Gallery" />
       <div className="relative mx-auto h-[380px] w-64">
         {order.map((idx, pos) => {
           const top = pos === 0;
-          const rot = [-3, 4, -6, 6, -2][idx % 5];
+          const rot = [-3, 4, -6, 6, -2][idx % 5] ?? 0;
           return (
             <motion.div
               key={idx}

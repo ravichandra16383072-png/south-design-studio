@@ -19,7 +19,7 @@ export function Rsvp() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = rsvpSchema.safeParse(form);
-    if (!parsed.success) return setError(parsed.error.issues[0].message);
+    if (!parsed.success) return setError(parsed.error.issues[0]?.message ?? "Please check the form");
     setError(null);
     setStatus("saving");
     const { error: err } = await supabase.from("rsvps").insert({ ...parsed.data, message: parsed.data.message || null });
