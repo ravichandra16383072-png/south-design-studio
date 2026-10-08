@@ -2,6 +2,8 @@
 
 Only the opening curtain and the first (Hridayam) screen change. Every other section, the RSVP, music, share and config stay as they are.
 
+The attached mockup guides composition and mood only. It is not placed in the site, and its phone frames, labels and arrows are not copied. Composition to follow: the closed curtain has asymmetric folds, jasmine hangs in the top corners, and the type sits in the clean centre with small gold ornament dividers. Mid-open, a warm sunlit gap shows the gopuram, with the lamp just inside the left curtain. In the revealed hero, mango leaves and jasmine frame the top, the gopuram sits behind the title, the lamp stands bottom-left, and a jasmine bowl and petals lie on the stone floor.
+
 ## Look
 Real photography instead of drawn shapes:
 - **Curtain:** two photographed maroon Kanjeevaram silk panels (left and right), with folds, sheen, wrinkles and a woven gold zari border on the inner edge. Real jasmine strings hang along the top edge.
