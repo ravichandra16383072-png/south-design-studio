@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ChevronDown, MapPin, Navigation } from "lucide-react";
 import { invite } from "@/invite.config";
-import { FloralCorner, Ganesha, Gopuram, Heart, JasmineStrings, Kolam, KolamDivider, Lamp, Thoranam } from "./Motifs";
+import { FloralCorner, Ganesha, Heart, Kolam, KolamDivider } from "./Motifs";
+import heroImg from "@/assets/temple-hero.jpg";
 
 const fmtDate = (iso: string) => {
   const d = new Date(iso);
@@ -42,44 +43,78 @@ function Heading({ kicker, title }: { kicker?: string; title: string }) {
   );
 }
 
-export function Hero() {
-  const reduce = useReducedMotion();
+export function InviteTitle({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-28 text-center">
+    <div className="flex flex-col items-center text-center">
+      <span className="h-px w-10 bg-gold/70" aria-hidden />
+      <h1 className="mt-5 font-serif text-[2.6rem] font-medium uppercase leading-none tracking-[0.18em] text-gold-soft [text-shadow:0_2px_18px_color-mix(in_oklab,var(--maroon-deep)_80%,transparent)] min-[390px]:text-5xl">
+        {invite.title}
+      </h1>
+      <div className="mt-4 flex items-center gap-3" aria-hidden>
+        <span className="h-px w-12 bg-gold/60" /><span className="h-1 w-1 rotate-45 bg-gold" /><span className="h-px w-12 bg-gold/60" />
+      </div>
+      <p lang={invite.regionalLang} className="mt-3 font-regional text-2xl font-medium text-gold [text-shadow:0_1px_10px_color-mix(in_oklab,var(--maroon-deep)_80%,transparent)]">
+        {invite.regionalSubtitle}
+      </p>
+      <p className={`mt-6 font-serif text-2xl ${tone === "light" ? "text-jasmine" : "text-maroon"} [text-shadow:0_1px_12px_color-mix(in_oklab,var(--maroon-deep)_70%,transparent)]`}>
+        {invite.groomName} &amp; {invite.brideName}
+      </p>
+      <p className="mt-2 font-serif text-lg tracking-[0.25em] text-gold-soft">{dotDate(invite.weddingDateTime)}</p>
+    </div>
+  );
+}
+
+const dotDate = (iso: string) => {
+  const d = new Date(iso);
+  return `${d.getDate()} · ${d.getMonth() + 1} · ${d.getFullYear()}`;
+};
+
+export function Hero({ revealed }: { revealed: boolean }) {
+  const reduce = useReducedMotion();
+  const ease = [0.65, 0, 0.35, 1] as const;
+  return (
+    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-maroon-deep px-6 text-center">
+      <motion.img
+        src={heroImg}
+        alt="Wedding mandapam entrance decorated with mango leaves, jasmine and a lit brass lamp"
+        width={864}
+        height={1600}
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover object-[30%_50%]"
+        initial={false}
+        animate={{ scale: revealed || reduce ? 1 : 1.08 }}
+        transition={{ duration: 2.6, ease }}
+      />
+      {/* dimming layer that lifts as the curtain opens */}
+      <motion.div className="absolute inset-0 bg-maroon-deep" initial={false} animate={{ opacity: revealed ? 0 : 0.7 }} transition={{ duration: 2.4, ease }} aria-hidden />
+      {/* readability scrim behind the title + fade into ivory page */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_32%_at_50%_46%,color-mix(in_oklab,var(--maroon-deep)_55%,transparent),transparent)]" aria-hidden />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-ivory" aria-hidden />
+      {/* flame glow over the photographed lamp */}
+      <span
+        className="flame-glow pointer-events-none absolute h-16 w-24 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--turmeric)_70%,transparent),transparent)] mix-blend-screen"
+        style={{ left: "calc(30% - 34vw * 0 + 2%)", top: "59%" }}
+        aria-hidden
+      />
+
       <motion.div
-        className="absolute inset-x-0 top-0 z-10"
-        initial={reduce ? false : { y: -120, rotate: -4 }}
-        animate={{ y: 0, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 60, damping: 9, delay: 0.3 }}
-        style={{ transformOrigin: "50% 0" }}
+        className="relative z-10 -mt-10"
+        initial={false}
+        animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 1.2, delay: revealed ? 0.6 : 0, ease }}
       >
-        <Thoranam className="h-20 w-full" />
+        <InviteTitle />
       </motion.div>
-      <JasmineStrings className="absolute inset-x-0 top-6 h-40 w-full opacity-90" />
-      <Gopuram className="absolute bottom-0 left-1/2 w-[120%] -translate-x-1/2 text-maroon/10" />
-
-      <motion.div initial={reduce ? false : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.9 }} className="relative z-20">
-        <p className="font-sans text-xs uppercase tracking-[0.4em] text-muted-foreground">Together with their families</p>
-        <h1 className="mt-4 font-serif text-7xl font-semibold leading-none text-maroon">{invite.title}</h1>
-        <p lang={invite.regionalLang} className="mt-3 font-regional text-3xl font-semibold gold-text">
-          {invite.regionalSubtitle}
-        </p>
-        <p className="mt-6 font-serif text-xl italic text-foreground">
-          {invite.groomName} <span className="font-script not-italic text-gold">&</span> {invite.brideName}
-        </p>
-        <p className="mt-3 font-sans text-2xl tracking-[0.3em] text-maroon">{fmtDate(invite.weddingDateTime)}</p>
-      </motion.div>
-
-      <Lamp className="relative z-20 mt-8 h-32 w-20" />
 
       <motion.a
         href="#blessing"
-        className="relative z-20 mt-6 flex flex-col items-center text-xs uppercase tracking-[0.3em] text-muted-foreground"
-        animate={reduce ? { y: 0 } : { y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 1.8 }}
+        className="absolute bottom-10 z-10 flex flex-col items-center font-serif text-base italic text-maroon"
+        initial={false}
+        animate={revealed ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 1, delay: revealed ? 1.6 : 0 }}
       >
         Scroll to discover
-        <ChevronDown className="mt-1 h-5 w-5 text-gold" />
+        <ChevronDown className={`mt-1 h-5 w-5 text-maroon ${reduce ? "" : "animate-bounce"}`} />
       </motion.a>
     </section>
   );
