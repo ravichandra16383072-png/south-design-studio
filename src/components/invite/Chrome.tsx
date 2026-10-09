@@ -1,39 +1,96 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Disc3, Share2, Link2, MessageCircle, VolumeX } from "lucide-react";
 import { invite } from "@/invite.config";
+import { InviteTitle } from "./Sections";
+import curtainLeft from "@/assets/curtain-left.jpg";
+import curtainRight from "@/assets/curtain-right.jpg";
 
-export function Curtain({ onOpen }: { onOpen: () => void }) {
+const silkEase = [0.7, 0, 0.25, 1] as const;
+
+function Panel({ side, opening, reduce }: { side: "left" | "right"; opening: boolean; reduce: boolean }) {
+  const left = side === "left";
+  return (
+    <motion.div
+      className={`absolute inset-y-0 w-1/2 overflow-hidden ${left ? "left-0" : "right-0"}`}
+      style={{ transformOrigin: left ? "0% 50%" : "100% 50%" }}
+      initial={false}
+      animate={
+        opening && !reduce
+          ? { x: left ? "-88%" : "88%", scaleX: 0.82, skewY: left ? -1.2 : 1.2 }
+          : { x: 0, scaleX: 1, skewY: 0 }
+      }
+      transition={{ duration: 2.3, ease: silkEase }}
+    >
+      <img
+        src={left ? curtainLeft : curtainRight}
+        alt=""
+        width={640}
+        height={1600}
+        fetchPriority="high"
+        draggable={false}
+        className={`h-full w-full object-cover ${left ? "object-[100%_50%]" : "object-[0%_50%]"}`}
+      />
+      {/* light catching the silk as it moves */}
+      <motion.div
+        className="absolute inset-0 bg-[linear-gradient(100deg,transparent_30%,color-mix(in_oklab,var(--turmeric)_28%,transparent)_50%,transparent_70%)] mix-blend-soft-light"
+        initial={false}
+        animate={opening && !reduce ? { x: left ? ["60%", "-80%"] : ["-60%", "80%"], opacity: [0, 1, 0] } : { opacity: 0 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+        aria-hidden
+      />
+      {/* inner-edge shadow where the panels meet */}
+      <div className={`absolute inset-y-0 w-6 ${left ? "right-0 bg-gradient-to-l" : "left-0 bg-gradient-to-r"} from-maroon-deep/60 to-transparent`} aria-hidden />
+    </motion.div>
+  );
+}
+
+export function Curtain({ onOpen, fading }: { onOpen: () => void; fading: boolean }) {
   const [opening, setOpening] = useState(false);
-  const panel = "absolute inset-y-0 w-1/2 bg-maroon";
-  const fabric = {
-    backgroundImage:
-      "repeating-linear-gradient(90deg, color-mix(in oklab, var(--maroon-deep) 60%, transparent) 0 3px, transparent 3px 22px)",
+  const reduce = !!useReducedMotion();
+  const open = () => {
+    if (opening) return;
+    setOpening(true);
+    onOpen();
   };
   return (
-    <AnimatePresence>
-      {(
-
-        <motion.div className="fixed inset-0 z-50 mx-auto max-w-[430px] overflow-hidden" exit={{ opacity: 0 }} onClick={() => { if (!opening) { setOpening(true); onOpen(); } }}>
-          <motion.div className={`${panel} left-0 border-r-8 border-gold`} style={fabric} animate={opening ? { x: "-100%" } : { x: 0 }} transition={{ duration: 1.6, ease: [0.7, 0, 0.3, 1] }}>
-            <div className="absolute inset-y-0 right-2 w-2 silk-border !h-auto" />
-          </motion.div>
-          <motion.div className={`${panel} right-0 border-l-8 border-gold`} style={fabric} animate={opening ? { x: "100%" } : { x: 0 }} transition={{ duration: 1.6, ease: [0.7, 0, 0.3, 1] }}>
-            <div className="absolute inset-y-0 left-2 w-2 silk-border !h-auto" />
-          </motion.div>
-          <motion.div className="absolute inset-x-0 top-0 silk-border !h-4" animate={opening ? { y: -20, opacity: 0 } : {}} />
-          <motion.button
-            type="button"
-            animate={opening ? { opacity: 0, scale: 0.8 } : { opacity: 1, scale: [1, 1.05, 1] }}
-            transition={opening ? { duration: 0.4 } : { repeat: Infinity, duration: 2 }}
-            className="absolute left-1/2 top-1/2 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-4 border-gold bg-maroon-deep text-center shadow-2xl"
-          >
-            <span className="font-serif text-2xl text-gold-soft">{invite.groomName[0]} & {invite.brideName[0]}</span>
-            <span className="mt-1 text-[10px] uppercase tracking-[0.3em] text-gold">Tap to open</span>
-          </motion.button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      role="button"
+      tabIndex={0}
+      aria-label={`Open the wedding invitation of ${invite.groomName} and ${invite.brideName}`}
+      onClick={open}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}
+      className={`fixed inset-0 z-50 mx-auto max-w-[430px] overflow-hidden outline-none ${opening ? "pointer-events-none" : "cursor-pointer"}`}
+      initial={false}
+      animate={{ opacity: fading || (reduce && opening) ? 0 : 1 }}
+      transition={{ duration: reduce ? 0.8 : 0.9, ease: "easeOut" }}
+    >
+      <Panel side="left" opening={opening} reduce={reduce} />
+      <Panel side="right" opening={opening} reduce={reduce} />
+      {/* soft vignette keeping the centre dark for the type */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_45%_at_50%_48%,color-mix(in_oklab,var(--maroon-deep)_65%,transparent),transparent_75%)]"
+        initial={false}
+        animate={{ opacity: opening ? 0 : 1 }}
+        transition={{ duration: 0.8 }}
+        aria-hidden
+      />
+      <motion.div
+        className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6"
+        initial={false}
+        animate={opening ? { opacity: 0, y: -8 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <div className="-mt-10"><InviteTitle /></div>
+        <motion.p
+          className="absolute bottom-[14%] font-serif text-lg italic text-gold-soft/90"
+          animate={reduce ? { opacity: 0.85 } : { opacity: [0.45, 0.95, 0.45] }}
+          transition={{ repeat: Infinity, duration: 2.6, ease: "easeInOut" }}
+        >
+          Tap to open
+        </motion.p>
+      </motion.div>
+    </motion.div>
   );
 }
 
