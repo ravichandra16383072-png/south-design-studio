@@ -32,7 +32,7 @@ The temple photo stays as the hero background, with a warm gradient fading into 
 - Animations use transform and opacity only, with about 12 petals. With reduced motion turned on, the curtain simply fades away and nothing flickers.
 
 ## Technical details
-- New AI photos in src/assets: `curtain-left.jpg`, `curtain-right.jpg` (one generation, mirrored so the two panels match), and `temple-hero.jpg` (about 860x1600, portrait).
+- New AI photos in src/assets: `curtain-left.jpg` and `curtain-right.jpg`, generated separately (not mirrored) so their folds, wrinkles and highlights differ while the silk, maroon tone and zari border match. Plus `temple-hero.jpg` (about 860x1600, portrait).
 - Rewrite `Curtain` in `src/components/invite/Chrome.tsx`. Panels are `motion.div`s with background images, animated with `x`, `scaleX` (origin at the outer edge), `skewY` and a sheen overlay. The title layer is shared.
 - Rewrite `Hero` in `src/components/invite/Sections.tsx` to use the photo background plus a flame glow overlay. The drawn motifs stay in `Motifs.tsx` for use elsewhere.
 - Shorten the timing in `src/routes/index.tsx` so the curtain unmounts once it opens (about 2.4s). Reduce the opening petal count.
