@@ -37,10 +37,12 @@ function Index() {
     document.body.style.overflow = curtainGone ? "" : "hidden";
   }, [curtainGone]);
 
+  const [fading, setFading] = useState(false);
   const open = () => {
     setOpened(true);
     audio.current?.play().then(() => setPlaying(true)).catch(() => {});
-    setTimeout(() => setCurtainGone(true), 1700);
+    setTimeout(() => setFading(true), 2300);
+    setTimeout(() => setCurtainGone(true), 3300);
   };
   const toggle = () => {
     const a = audio.current;
