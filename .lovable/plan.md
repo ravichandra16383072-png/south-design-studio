@@ -1,39 +1,43 @@
-# Photographic Kerala opening for Hridayam
+# Photographic Telugu wedding opening
 
-Only the opening curtain and the first (Hridayam) screen change. Every other section, the RSVP, music, share and config stay as they are.
+Only the opening curtain and the first screen change. The RSVP, events, gallery, venue, family section, countdown, music, sharing, footer and the content file's structure all stay as they are.
 
-The attached mockup guides composition and mood only. It is not placed in the site, and its phone frames, labels and arrows are not copied. Composition to follow: the closed curtain has asymmetric folds, jasmine hangs in the top corners, and the type sits in the clean centre with small gold ornament dividers. Mid-open, a warm sunlit gap shows the gopuram, with the lamp just inside the left curtain. In the revealed hero, mango leaves and jasmine frame the top, the gopuram sits behind the title, the lamp stands bottom-left, and a jasmine bowl and petals lie on the stone floor.
+The mockup and brief guide composition and mood only. Neither is placed in the site, and no phone frames, labels or arrows are copied.
 
 ## Look
-Real photography instead of drawn shapes:
-- **Curtain:** two photographed maroon Kanjeevaram silk panels (left and right), with folds, sheen, wrinkles and a woven gold zari border on the inner edge. Real jasmine strings hang along the top edge.
-- **Revealed scene:** one portrait photo of a Kerala temple entrance at golden hour. The gopuram is softly blurred behind, a mango-leaf thoranam and jasmine strings hang at the top, a polished brass kuthuvilakku stands in the foreground, and jasmine petals lie on the stone floor. The middle of the photo is calm and darker so the title can be read.
-- The drawn garland, jasmine strings, gopuram outline and drawn lamp are removed from the first screen.
+Real photography instead of drawn shapes, with a Telugu ceremonial setting (no Kerala-specific architecture, no Malayalam lettering on the opening):
+- **Curtain:** two separately generated photos, never mirrored. Both are deep maroon Kanjeevaram silk with an antique-gold zari border on the inner edge, but the folds, wrinkles, highlights and shadows differ naturally. Jasmine hangs at the top corners. The centre stays dark and clean.
+- **Revealed scene:** one portrait photo of a Telugu wedding mandapam or temple entrance at golden hour. It shows carved pillars softly out of focus, a mango-leaf toranam with jasmine and marigold at the top, a polished brass oil lamp at bottom-left, and scattered petals with a small flower arrangement on the floor. The middle stays calm and darker so the title reads clearly. It has no text or watermarks.
+- The drawn garland, jasmine strings, gopuram outline and drawn lamp are removed from the first screen. They remain available for other sections.
 
 ## Closed state
-- Full-screen silk curtain with a soft dark vignette in the centre.
-- Understated type: HRIDAYAM (Cormorant Garamond, widely spaced), ഹൃദയം in muted gold (Noto Sans Malayalam), Rahul & Anjali, 21 · 10 · 2026, and a faint pulsing "Tap to open".
-- No round badge or other UI on top.
+- Understated type: HRIDAYAM (Cormorant Garamond, widely spaced), హృదయం in muted gold (Noto Sans Telugu), Rahul & Anjali, 21 · 10 · 2026, and a faint pulsing "Tap to open". Small gold hairline dividers, no round badge, no extra buttons.
+- The title, subtitle, names and date still come from the content file.
 
-## Opening sequence (about 2.5s)
-1. The panels part from the centre. Each panel moves sideways while it narrows a little, skews slightly toward the outer edge and gets a moving sheen, so it reads as gathered fabric rather than a sliding rectangle.
-2. The temple scene behind brightens from dim to warm, with a slow push-in.
-3. A soft glow at the lamp's flame flickers subtly (opacity and scale only) over the photographed flame.
-4. About 12 jasmine petals drift down, reusing the existing petal effect at a lower count.
-5. The title text fades and settles into the hero position, so the text never pops in.
-6. Music starts on the tap, as it does now.
+## Opening sequence (about 2.5s after the tap)
+1. The panels move outward from the centre and compress toward the sides, with slight skew and scale and a moving sheen, so they read as heavy silk being drawn aside.
+2. A thin strip of curtain stays at each edge after opening for continuity, so nothing jumps.
+3. The ceremonial background brightens from dim to warm with a slow push-in, and the photographed lamp comes into view.
+4. A small, cheap glow pulses over the lamp's real flame.
+5. About 12 petals drift down, using the existing petal effect at a lower count.
+6. The title glides into its hero position without popping.
+7. Music starts on the tap, exactly as it does now.
 
 ## Hero after opening
-The temple photo stays as the hero background, with a warm gradient fading into the ivory paper below. The title, Malayalam line, names, date and "Scroll to discover" sit in the clear middle area, and the lamp stays visible near the bottom.
+The photo stays as the hero background and fades through a warm gradient into the ivory page below. It shows the title, Telugu line, names and date in the clear middle, the lamp at bottom-left, and "Scroll to discover" near the bottom.
 
 ## Mobile, performance and motion
-- Tested at 360, 375, 390, 414 and 430px wide. Each photo is positioned so the title and lamp are never cropped. Desktop keeps the centered phone-width layout.
-- Three photos, compressed JPGs of about 150–250KB. The hero photo loads early and the curtain photos load first.
-- Animations use transform and opacity only, with about 12 petals. With reduced motion turned on, the curtain simply fades away and nothing flickers.
+- Checked at 360, 375, 390, 414 and 430px with no sideways scroll and no cropped title or lamp. The photo positions are tuned per photo. Desktop keeps the centered phone-width layout.
+- Three compressed JPGs of about 150–250KB each. The curtain and hero photos load first. Gallery photos stay lazy, so they don't load during the opening. Fixed sizes prevent layout shift.
+- Animations use transform and opacity only. With reduced motion turned on, the opening is a simple fade with no flicker and no petals. The tap target works by keyboard (Enter or Space) as well as touch.
+
+## Content change (values only)
+- `regionalSubtitle` becomes "హృదయం" and `regionalLang` becomes "te". The Noto Sans Telugu font is added.
+- The Family section's regional blessing line is currently Malayalam. It is left untouched because that section is out of scope, and I'll flag it so you can supply a Telugu line.
 
 ## Technical details
-- New AI photos in src/assets: `curtain-left.jpg` and `curtain-right.jpg`, generated separately (not mirrored) so their folds, wrinkles and highlights differ while the silk, maroon tone and zari border match. Plus `temple-hero.jpg` (about 860x1600, portrait).
-- Rewrite `Curtain` in `src/components/invite/Chrome.tsx`. Panels are `motion.div`s with background images, animated with `x`, `scaleX` (origin at the outer edge), `skewY` and a sheen overlay. The title layer is shared.
-- Rewrite `Hero` in `src/components/invite/Sections.tsx` to use the photo background plus a flame glow overlay. The drawn motifs stay in `Motifs.tsx` for use elsewhere.
-- Shorten the timing in `src/routes/index.tsx` so the curtain unmounts once it opens (about 2.4s). Reduce the opening petal count.
-- The config file is unchanged.
+- Assets in src/assets: `curtain-left.jpg` and `curtain-right.jpg` (generated independently with matching material, borders aligned at the centre seam), and `temple-hero.jpg` (about 860x1600). Each is checked visually and recompressed with an image tool if it is too large.
+- `Chrome.tsx`: rewrite `Curtain`. Panels are `motion.div`s with photo backgrounds and an outer-edge transform origin, animating `x` (to roughly ±88%, leaving the edge strip), slight `scaleX` and `skewY`, plus a sheen overlay. It is a focusable button with an aria-label.
+- `Sections.tsx`: rewrite `Hero` only, with the photo background, scrim, flame-glow overlay and existing typography.
+- `index.tsx`: curtain lifecycle about 2.5s, then the curtain fades out over the already-visible hero so the edge strips dissolve smoothly. Opening petal count reduced to about 12.
+- `__root.tsx`: add Noto Sans Telugu to the font link.
