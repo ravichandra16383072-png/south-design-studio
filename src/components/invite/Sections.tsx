@@ -93,7 +93,7 @@ export function Hero({ revealed }: { revealed: boolean }) {
       {/* flame glow over the photographed lamp */}
       <span
         className="flame-glow pointer-events-none absolute h-16 w-24 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--turmeric)_70%,transparent),transparent)] mix-blend-screen"
-        style={{ left: "calc(30% - 34vw * 0 + 2%)", top: "59%" }}
+        style={{ left: "11%", top: "62%", transform: "translate(-50%, -50%)" }}
         aria-hidden
       />
 

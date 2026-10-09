@@ -39,7 +39,7 @@
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Outfit", system-ui, sans-serif;
   --font-script: "Great Vibes", cursive;
-  --font-regional: "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Telugu", sans-serif;
+  --font-regional: "Noto Sans Telugu", "Noto Sans Malayalam", "Noto Sans Tamil", sans-serif;
 }
 
 :root {
@@ -127,3 +127,11 @@
   .flame, .petal, .spin-slow, .sway { animation: none !important; }
   .petal { display: none; }
 }
+
+@keyframes glow-flicker {
+  0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(1); }
+  30% { opacity: .8; transform: translate(-50%, -52%) scale(1.08); }
+  60% { opacity: .5; transform: translate(-50%, -49%) scale(.96); }
+}
+.flame-glow { animation: glow-flicker 2.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .flame-glow { animation: none; opacity: .6; } }
