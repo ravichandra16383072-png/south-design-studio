@@ -39,7 +39,6 @@ function Index() {
   const open = () => {
     setOpened(true);
     audio.current?.play().then(() => setPlaying(true)).catch(() => {});
-    setTimeout(() => setCurtainGone(true), 1000);
   };
   const toggle = () => {
     const a = audio.current;
@@ -52,8 +51,8 @@ function Index() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_center,var(--maroon),var(--maroon-deep))]">
       <audio ref={audio} src={invite.musicUrl} loop preload="none" />
       <main className="paper relative mx-auto max-w-[430px] overflow-x-hidden shadow-[0_0_80px_color-mix(in_oklab,var(--maroon-deep)_80%,transparent)]">
-        <div className="pointer-events-none absolute bottom-0 top-[100svh] left-0 z-30 w-1.5 silk-border !h-auto" />
-        <div className="pointer-events-none absolute bottom-0 top-[100svh] right-0 z-30 w-1.5 silk-border !h-auto" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-1.5 silk-border !h-auto" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-1.5 silk-border !h-auto" />
         <Hero revealed={opened} />
         <Blessing />
         <Couple />
@@ -69,7 +68,7 @@ function Index() {
         <Video />
         <Footer />
       </main>
-      {!curtainGone && <OpeningReveal onOpen={open} />}
+      {!curtainGone && <OpeningReveal onOpen={open} onFinish={() => setCurtainGone(true)} />}
       {curtainGone && (
         <>
           <MusicToggle playing={playing} onToggle={toggle} />
