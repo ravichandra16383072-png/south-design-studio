@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { invite } from "@/invite.config";
-import { Blessing, Countdown, Couple, Events, Family, Footer, Gallery, Hero, Story, Venue } from "@/components/invite/Sections";
-import { Rsvp } from "@/components/invite/Rsvp";
+import { Blessing, Countdown, Couple, Events, Family, Footer, Gallery, Hero, Story, Venue, Video } from "@/components/invite/Sections";
 import { Curtain, MusicToggle, SharePill } from "@/components/invite/Chrome";
 import { KolamDivider, Petals } from "@/components/invite/Motifs";
 
@@ -70,7 +69,7 @@ function Index() {
         <Family />
         <KolamDivider />
         <Gallery />
-        <Rsvp />
+        <Video />
         <Footer />
       </main>
       {!curtainGone && <Curtain onOpen={open} fading={fading} />}

@@ -342,6 +342,25 @@ export function Gallery() {
   );
 }
 
+export function Video() {
+  return (
+    <Section className="text-center">
+      <Heading kicker="watch together" title="A Special Moment" />
+      <div className="mx-auto overflow-hidden rounded-2xl border-4 border-gold/70 bg-maroon shadow-xl">
+        <iframe
+          className="aspect-video w-full"
+          src="https://www.youtube.com/embed/JUr7S2rNl-g"
+          title="Kalyanam Kamaneeyam — Wedding video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        >
+        </iframe>
+      </div>
+    </Section>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="relative bg-maroon px-6 pb-28 pt-12 text-center text-primary-foreground">
