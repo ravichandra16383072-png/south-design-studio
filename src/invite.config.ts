@@ -36,6 +36,7 @@ export const invite = {
     "We met on a rainy monsoon evening in Fort Kochi, sharing an umbrella and a plate of banana fritters. What began as a chance conversation grew into countless filter-coffee mornings, long drives along the backwaters, and a love that feels like home. Now, with our families' blessings, we begin forever.",
   coverPhoto: cover,
   galleryPhotos: [g2, g1, g3, g4, cover],
+  galleryDriveUrl: "https://drive.google.com/drive/folders/1jaGvdT6wbjQCAcY2RRA06EceRmnFu31c",
   musicUrl: "https://cdn.pixabay.com/audio/2022/10/30/audio_347111d6a5.mp3",
   rsvpDeadline: "2026-10-10",
   contactPhone: "919876543210",

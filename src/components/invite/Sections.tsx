@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ChevronDown, MapPin, Navigation } from "lucide-react";
+import { ChevronDown, ExternalLink, MapPin, Navigation } from "lucide-react";
 import { invite } from "@/invite.config";
 import { FloralCorner, Ganesha, Heart, Kolam, KolamDivider } from "./Motifs";
 import heroImg from "@/assets/temple-hero.jpg";
@@ -338,6 +338,15 @@ export function Gallery() {
         })}
       </div>
       <p className="mt-6 text-xs uppercase tracking-[0.3em] text-muted-foreground">Swipe or tap</p>
+      <a
+        href={invite.galleryDriveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold px-5 py-3 text-sm font-medium text-maroon transition-colors hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+      >
+        View all photos on Google Drive
+        <ExternalLink className="h-4 w-4" aria-hidden="true" />
+      </a>
     </Section>
   );
 }

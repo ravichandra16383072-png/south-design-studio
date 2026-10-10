@@ -40,8 +40,8 @@ function Index() {
   const open = () => {
     setOpened(true);
     audio.current?.play().then(() => setPlaying(true)).catch(() => {});
-    setTimeout(() => setFading(true), 2300);
-    setTimeout(() => setCurtainGone(true), 3300);
+    setTimeout(() => setFading(true), 550);
+    setTimeout(() => setCurtainGone(true), 1200);
   };
   const toggle = () => {
     const a = audio.current;
