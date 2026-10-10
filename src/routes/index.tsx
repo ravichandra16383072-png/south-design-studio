@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { invite } from "@/invite.config";
 import { Blessing, Countdown, Couple, Events, Family, Footer, Gallery, Hero, Story, Venue, Video } from "@/components/invite/Sections";
-import { Curtain, MusicToggle, SharePill } from "@/components/invite/Chrome";
-import { KolamDivider, Petals } from "@/components/invite/Motifs";
+import { OpeningReveal, MusicToggle, SharePill } from "@/components/invite/Chrome";
+import { KolamDivider } from "@/components/invite/Motifs";
 
 const d = new Date(invite.weddingDateTime);
 const dateStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
@@ -36,12 +36,10 @@ function Index() {
     document.body.style.overflow = curtainGone ? "" : "hidden";
   }, [curtainGone]);
 
-  const [fading, setFading] = useState(false);
   const open = () => {
     setOpened(true);
     audio.current?.play().then(() => setPlaying(true)).catch(() => {});
-    setTimeout(() => setFading(true), 2300);
-    setTimeout(() => setCurtainGone(true), 3300);
+    setTimeout(() => setCurtainGone(true), 1000);
   };
   const toggle = () => {
     const a = audio.current;
@@ -54,9 +52,8 @@ function Index() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_center,var(--maroon),var(--maroon-deep))]">
       <audio ref={audio} src={invite.musicUrl} loop preload="none" />
       <main className="paper relative mx-auto max-w-[430px] overflow-x-hidden shadow-[0_0_80px_color-mix(in_oklab,var(--maroon-deep)_80%,transparent)]">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-1.5 silk-border !h-auto" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-1.5 silk-border !h-auto" />
-        {opened && <div className="pointer-events-none fixed inset-0 z-40 mx-auto max-w-[430px]"><Petals count={12} /></div>}
+        <div className="pointer-events-none absolute bottom-0 top-[100svh] left-0 z-30 w-1.5 silk-border !h-auto" />
+        <div className="pointer-events-none absolute bottom-0 top-[100svh] right-0 z-30 w-1.5 silk-border !h-auto" />
         <Hero revealed={opened} />
         <Blessing />
         <Couple />
@@ -72,7 +69,7 @@ function Index() {
         <Video />
         <Footer />
       </main>
-      {!curtainGone && <Curtain onOpen={open} fading={fading} />}
+      {!curtainGone && <OpeningReveal onOpen={open} />}
       {curtainGone && (
         <>
           <MusicToggle playing={playing} onToggle={toggle} />
