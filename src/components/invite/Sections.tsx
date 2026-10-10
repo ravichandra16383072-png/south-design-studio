@@ -82,11 +82,11 @@ export function Hero({ revealed }: { revealed: boolean }) {
         fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover object-center"
         initial={false}
-        animate={{ scale: revealed || reduce ? 1 : 1.08 }}
+        animate={{ scale: 1 }}
         transition={{ duration: 2.6, ease }}
       />
-      {/* dimming layer that lifts as the curtain opens */}
-      <motion.div className="absolute inset-0 bg-maroon-deep" initial={false} animate={{ opacity: revealed ? 0 : 0.7 }} transition={{ duration: 2.4, ease }} aria-hidden />
+      {/* The photograph gently brightens after the invitation is opened. */}
+      <motion.div className="absolute inset-0 bg-maroon-deep" initial={false} animate={{ opacity: revealed ? 0 : 0.35 }} transition={{ duration: reduce ? 0.4 : 1.2, ease }} aria-hidden />
       {/* readability scrim behind the title + fade into ivory page */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_32%_at_50%_46%,color-mix(in_oklab,var(--maroon-deep)_55%,transparent),transparent)]" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-ivory" aria-hidden />
@@ -100,8 +100,7 @@ export function Hero({ revealed }: { revealed: boolean }) {
       <motion.div
         className="absolute inset-x-6 top-[7%] z-10"
         initial={false}
-        animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{ duration: 1.2, delay: revealed ? 0.6 : 0, ease }}
+        animate={{ opacity: 1, y: 0 }}
       >
         <InviteTitle />
       </motion.div>

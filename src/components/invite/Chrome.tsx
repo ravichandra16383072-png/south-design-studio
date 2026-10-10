@@ -2,49 +2,33 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Disc3, Share2, Link2, MessageCircle, VolumeX } from "lucide-react";
 import { invite } from "@/invite.config";
+import { Button } from "@/components/ui/button";
 
-export function Curtain({ onOpen, fading }: { onOpen: () => void; fading: boolean }) {
+export function OpeningReveal({ onOpen }: { onOpen: () => void }) {
   const [opening, setOpening] = useState(false);
   const reduce = !!useReducedMotion();
-  const date = new Date(invite.weddingDateTime).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const open = () => {
+    if (opening) return;
+    setOpening(true);
+    onOpen();
+  };
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 mx-auto flex max-w-[430px] items-center justify-center overflow-y-auto bg-maroon-deep/75 px-6 py-10 backdrop-blur-sm"
+      className={`fixed inset-0 z-50 mx-auto max-w-[430px] overflow-hidden ${opening ? "pointer-events-none" : ""}`}
       initial={false}
-      animate={{ opacity: fading || (reduce && opening) ? 0 : 1 }}
-      transition={{ duration: reduce ? 0.4 : 0.7, ease: "easeOut" }}
+      animate={{ opacity: opening ? 0 : 1 }}
+      transition={{ duration: reduce ? 0.8 : 0.9, ease: "easeOut" }}
     >
-      <motion.div
-        className="relative w-full max-w-sm rounded-2xl border border-gold/70 bg-ivory/95 px-6 py-12 text-center shadow-2xl shadow-maroon-deep/40"
-        animate={opening ? { opacity: 0, y: -12, scale: 0.98 } : { opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduce ? 0.25 : 0.55, ease: "easeOut" }}
+      <Button
+        variant="ghost"
+        onClick={open}
+        disabled={opening}
+        aria-label={`Open the wedding invitation of ${invite.groomName} and ${invite.brideName}`}
+        className="absolute inset-0 h-full w-full rounded-none bg-transparent p-0 hover:bg-transparent focus-visible:ring-inset focus-visible:ring-gold"
       >
-        <div className="pointer-events-none absolute inset-2 rounded-xl border border-gold/30" aria-hidden />
-        <p lang={invite.regionalLang} className="font-regional text-xl text-gold">{invite.regionalSubtitle}</p>
-        <p className="mt-3 text-xs uppercase tracking-[0.28em] text-muted-foreground">Together with their families</p>
-        <h1 className="mt-5 font-serif text-4xl font-medium text-maroon">
-          {invite.groomName} <span className="text-gold">&amp;</span> {invite.brideName}
-        </h1>
-        <p className="mt-3 font-serif text-lg text-maroon/80">{date}</p>
-        <div className="mx-auto my-6 h-px w-16 bg-gold/70" aria-hidden />
-        <p className="font-script text-3xl text-maroon">{invite.title}</p>
-        <button
-          type="button"
-          disabled={opening}
-          onClick={() => {
-            setOpening(true);
-            onOpen();
-          }}
-          className="mt-8 rounded-full bg-maroon px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground shadow-lg transition hover:bg-maroon-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold disabled:cursor-default"
-        >
-          Open invitation
-        </button>
-      </motion.div>
+        <span className="absolute bottom-[14%] font-serif text-lg font-normal italic text-gold-soft">Tap to open</span>
+      </Button>
     </motion.div>
   );
 }
