@@ -57,8 +57,8 @@ function Index() {
       <main className="paper relative mx-auto max-w-[430px] overflow-x-hidden shadow-[0_0_80px_color-mix(in_oklab,var(--maroon-deep)_80%,transparent)]">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-1.5 silk-border !h-auto" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-1.5 silk-border !h-auto" />
-        {opened && <div className="pointer-events-none fixed inset-0 z-40 mx-auto max-w-[430px]"><Petals count={28} /></div>}
-        <Hero />
+        {opened && <div className="pointer-events-none fixed inset-0 z-40 mx-auto max-w-[430px]"><Petals count={12} /></div>}
+        <Hero revealed={opened} />
         <Blessing />
         <Couple />
         <KolamDivider />
@@ -73,7 +73,7 @@ function Index() {
         <Rsvp />
         <Footer />
       </main>
-      {!curtainGone && <Curtain onOpen={open} />}
+      {!curtainGone && <Curtain onOpen={open} fading={fading} />}
       {curtainGone && (
         <>
           <MusicToggle playing={playing} onToggle={toggle} />

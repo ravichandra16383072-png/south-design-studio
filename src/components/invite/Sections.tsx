@@ -76,11 +76,11 @@ export function Hero({ revealed }: { revealed: boolean }) {
     <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-maroon-deep px-6 text-center">
       <motion.img
         src={heroImg}
-        alt="Wedding mandapam entrance decorated with mango leaves, jasmine and a lit brass lamp"
+        alt="Telugu bride and groom performing a wedding ritual in a lamp-lit mandapam"
         width={864}
         height={1600}
         fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover object-[30%_50%]"
+        className="absolute inset-0 h-full w-full object-cover object-center"
         initial={false}
         animate={{ scale: revealed || reduce ? 1 : 1.08 }}
         transition={{ duration: 2.6, ease }}
@@ -98,7 +98,7 @@ export function Hero({ revealed }: { revealed: boolean }) {
       />
 
       <motion.div
-        className="relative z-10 -mt-10"
+        className="absolute inset-x-6 top-[7%] z-10"
         initial={false}
         animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         transition={{ duration: 1.2, delay: revealed ? 0.6 : 0, ease }}
